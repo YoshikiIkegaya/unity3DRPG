@@ -5,6 +5,7 @@ using UnityEngine;
 public class AutoDoor : MonoBehaviour {
 
 	Animator anim;
+	public bool conditionNeedItem = false;
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -17,7 +18,13 @@ public class AutoDoor : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (other.name == "Player") {
-			anim.SetBool ("IsOpen", true);
+			if (conditionNeedItem == false) {
+				anim.SetBool ("IsOpen", true);
+			} else {
+				if (Gamemanager.instance.inventory.HasItem ()) {
+					anim.SetBool ("IsOpen", true);
+				}
+			}
 		}
 	}
 

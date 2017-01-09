@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TreasureChest : MonoBehaviour {
+	
 	Animator anim;
+	bool isOpen = false;
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -15,8 +17,12 @@ public class TreasureChest : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.name == "Player") {
+		if (other.name == "Player" && isOpen == false) {
 			anim.SetBool ("IsOpen", true);
+			GameObject effectObj = Resources.Load<GameObject> ("Effects/ItemEffect");
+			GameObject effect = (GameObject)Instantiate (effectObj, gameObject.transform.position, effectObj.transform.rotation);
+			effect.transform.parent = gameObject.transform;
+			isOpen = true;
 		}
 	}
 }
